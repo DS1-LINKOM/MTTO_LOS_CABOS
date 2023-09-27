@@ -1,2 +1,3 @@
 rootProject.name = "MTTO_LOS_CABOS"
 include ':app'
+include ':OpenCV'

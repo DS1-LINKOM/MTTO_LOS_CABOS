@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
@@ -51,6 +53,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import mx.linkom.mtto_los_cabos.EditarFotos.EditarFoto;
 
 public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Menu {
     private Configuracion Conf;
@@ -244,14 +248,14 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
 
     String[] segundo = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m","n","o","p","q","r","s","t","u","v","w", "x","y","z" };
-    int numRandonsegun = (int) Math.round(Math.random() * 26 ) ;
+    int numRandonsegun = (int) Math.round(Math.random() * 25 ) ;
 
     Random tercero = new Random();
     int tercer= tercero.nextInt(9);
 
     String[] cuarto = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m","n","o","p","q","r","s","t","u","v","w", "x","y","z" };
-    int numRandoncuart = (int) Math.round(Math.random() * 26 ) ;
+    int numRandoncuart = (int) Math.round(Math.random() * 25 ) ;
 
     String numero_aletorio=prime+segundo[numRandonsegun]+tercer+cuarto[numRandoncuart];
 
@@ -262,14 +266,14 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
 
     String[] segundo2 = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m","n","o","p","q","r","s","t","u","v","w", "x","y","z" };
-    int numRandonsegun2 = (int) Math.round(Math.random() * 26 ) ;
+    int numRandonsegun2 = (int) Math.round(Math.random() * 25 ) ;
 
     Random tercero2 = new Random();
     int tercer2= tercero2.nextInt(9);
 
     String[] cuarto2 = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m","n","o","p","q","r","s","t","u","v","w", "x","y","z" };
-    int numRandoncuart2 = (int) Math.round(Math.random() * 26 ) ;
+    int numRandoncuart2 = (int) Math.round(Math.random() * 25 ) ;
 
     String numero_aletorio2=prime2+segundo2[numRandonsegun2];
 
@@ -280,14 +284,14 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
 
     String[] segundo3 = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m","n","o","p","q","r","s","t","u","v","w", "x","y","z" };
-    int numRandonsegun3 = (int) Math.round(Math.random() * 26 ) ;
+    int numRandonsegun3 = (int) Math.round(Math.random() * 25 ) ;
 
     Random tercero3 = new Random();
     int tercer3= tercero3.nextInt(9);
 
     String[] cuarto3 = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
             "k", "l", "m","n","o","p","q","r","s","t","u","v","w", "x","y","z" };
-    int numRandoncuart3 = (int) Math.round(Math.random() * 26 ) ;
+    int numRandoncuart3 = (int) Math.round(Math.random() * 25 ) ;
 
     String numero_aletorio3=prime3+segundo3[numRandonsegun3]+tercer3+cuarto3[numRandoncuart3];
 
@@ -731,6 +735,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -741,6 +746,8 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 foto=1;
 
                 Bitmap bitmap = BitmapFactory.decodeFile(getApplicationContext().getExternalFilesDir(null) + "/antes.png");
+
+                bitmap = EditarFoto.fechaHoraFoto(bitmap);
 
                 Antes.setVisibility(View.VISIBLE);
                 foto_antes.setVisibility(View.VISIBLE);
@@ -757,6 +764,8 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 foto=2;
 
                 Bitmap bitmap = BitmapFactory.decodeFile(getApplicationContext().getExternalFilesDir(null) + "/despues.png");
+
+                bitmap = EditarFoto.fechaHoraFoto(bitmap);
 
                 Despues.setVisibility(View.VISIBLE);
                 foto_despues.setVisibility(View.VISIBLE);
@@ -778,6 +787,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                    bitmap = EditarFoto.fechaHoraFoto(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -800,6 +810,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                    bitmap = EditarFoto.fechaHoraFoto(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

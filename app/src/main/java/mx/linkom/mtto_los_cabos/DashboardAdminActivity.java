@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
+import org.opencv.android.OpenCVLoader;
 
 import mx.linkom.mtto_los_cabos.Controller.PagerAdminControlador;
 
@@ -42,6 +43,9 @@ public class DashboardAdminActivity extends  mx.linkom.mtto_los_cabos.Menu {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_admin);
+
+        if (OpenCVLoader.initDebug()) Log.e("openCV", "Ya funciona :D");
+        else Log.e("openCV", "NO funciona :D");
 
         fAuth = FirebaseAuth.getInstance();
         Conf = new mx.linkom.mtto_los_cabos.Configuracion(this);
