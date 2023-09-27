@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
@@ -51,6 +53,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import mx.linkom.mtto_los_cabos.EditarFotos.EditarFoto;
 
 public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Menu {
     private Configuracion Conf;
@@ -731,6 +735,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -741,6 +746,8 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 foto=1;
 
                 Bitmap bitmap = BitmapFactory.decodeFile(getApplicationContext().getExternalFilesDir(null) + "/antes.png");
+
+                bitmap = EditarFoto.fechaHoraFoto(bitmap);
 
                 Antes.setVisibility(View.VISIBLE);
                 foto_antes.setVisibility(View.VISIBLE);
@@ -757,6 +764,8 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 foto=2;
 
                 Bitmap bitmap = BitmapFactory.decodeFile(getApplicationContext().getExternalFilesDir(null) + "/despues.png");
+
+                bitmap = EditarFoto.fechaHoraFoto(bitmap);
 
                 Despues.setVisibility(View.VISIBLE);
                 foto_despues.setVisibility(View.VISIBLE);
@@ -778,6 +787,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                    bitmap = EditarFoto.fechaHoraFoto(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -800,6 +810,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                    bitmap = EditarFoto.fechaHoraFoto(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

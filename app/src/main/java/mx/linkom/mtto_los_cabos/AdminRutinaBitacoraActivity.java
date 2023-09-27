@@ -53,6 +53,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import mx.linkom.mtto_los_cabos.EditarFotos.EditarFoto;
+
 public class AdminRutinaBitacoraActivity extends mx.linkom.mtto_los_cabos.Menu {
     private Configuracion Conf;
     JSONArray ja1,ja2;
@@ -743,6 +745,8 @@ public class AdminRutinaBitacoraActivity extends mx.linkom.mtto_los_cabos.Menu {
 
                 Bitmap bitmap = BitmapFactory.decodeFile(getApplicationContext().getExternalFilesDir(null) + "/antes.png");
 
+                bitmap = EditarFoto.fechaHoraFoto(bitmap);
+
                 Antes.setVisibility(View.VISIBLE);
                 foto_antes.setVisibility(View.VISIBLE);
                 foto_antes.setImageBitmap(bitmap);
@@ -755,6 +759,7 @@ public class AdminRutinaBitacoraActivity extends mx.linkom.mtto_los_cabos.Menu {
                 foto=2;
 
                 Bitmap bitmap = BitmapFactory.decodeFile(getApplicationContext().getExternalFilesDir(null) + "/despues.png");
+                bitmap = EditarFoto.fechaHoraFoto(bitmap);
 
                 Despues.setVisibility(View.VISIBLE);
                 foto_despues.setVisibility(View.VISIBLE);
@@ -773,6 +778,7 @@ public class AdminRutinaBitacoraActivity extends mx.linkom.mtto_los_cabos.Menu {
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                    bitmap = EditarFoto.fechaHoraFoto(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -792,6 +798,7 @@ public class AdminRutinaBitacoraActivity extends mx.linkom.mtto_los_cabos.Menu {
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                    bitmap = EditarFoto.fechaHoraFoto(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
