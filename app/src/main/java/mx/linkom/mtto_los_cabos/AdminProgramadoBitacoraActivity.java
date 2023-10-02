@@ -49,6 +49,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +76,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
     LinearLayout Espacio1,Espacio2,Espacio3,Espacio4,Espacio5,Espacio6,Espacio7,Espacio8,Espacio9,Espacio10;
     int antes_a,despues_a,antes_d,despues_d;
     Uri filePath;
+    String rutaImagen1="", rutaImagen2="";
 
 
     @Override
@@ -704,6 +706,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
         Intent intentCaptura = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intentCaptura.addFlags(intentCaptura.FLAG_GRANT_READ_URI_PERMISSION);
         File foto = new File(getApplication().getExternalFilesDir(null),"antes.png");
+        rutaImagen1 = foto.getAbsolutePath();
         uri_img= FileProvider.getUriForFile(getApplicationContext(),getApplicationContext().getPackageName()+".provider",foto);
         intentCaptura.putExtra(MediaStore.EXTRA_OUTPUT,uri_img);
         startActivityForResult( intentCaptura, 0);
@@ -714,6 +717,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
         Intent intentCaptura = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intentCaptura.addFlags(intentCaptura.FLAG_GRANT_READ_URI_PERMISSION);
         File foto = new File(getApplication().getExternalFilesDir(null),"despues.png");
+        rutaImagen2 = foto.getAbsolutePath();
         uri_img2= FileProvider.getUriForFile(getApplicationContext(),getApplicationContext().getPackageName()+".provider",foto);
         intentCaptura.putExtra(MediaStore.EXTRA_OUTPUT,uri_img2);
         startActivityForResult( intentCaptura, 1);
@@ -749,6 +753,17 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
 
                 bitmap = EditarFoto.fechaHoraFoto(bitmap);
 
+                FileOutputStream fos = null;
+
+                try {
+                    fos = new FileOutputStream(rutaImagen1);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos); // compress and save as JPEG
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Antes.setVisibility(View.VISIBLE);
                 foto_antes.setVisibility(View.VISIBLE);
                 foto_antes.setImageBitmap(bitmap);
@@ -766,6 +781,17 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 Bitmap bitmap = BitmapFactory.decodeFile(getApplicationContext().getExternalFilesDir(null) + "/despues.png");
 
                 bitmap = EditarFoto.fechaHoraFoto(bitmap);
+
+                FileOutputStream fos = null;
+
+                try {
+                    fos = new FileOutputStream(rutaImagen2);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos); // compress and save as JPEG
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 Despues.setVisibility(View.VISIBLE);
                 foto_despues.setVisibility(View.VISIBLE);
@@ -788,6 +814,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                     bitmap = EditarFoto.fechaHoraFoto(bitmap);
+                    filePath = convertirBitmapUri(bitmap, "antesgallery.jpg");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -811,6 +838,7 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                     bitmap = EditarFoto.fechaHoraFoto(bitmap);
+                    filePath = convertirBitmapUri(bitmap, "despuesgallery.jpg");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -828,6 +856,21 @@ public class AdminProgramadoBitacoraActivity extends mx.linkom.mtto_los_cabos.Me
         }
     }
 
+    public Uri convertirBitmapUri(Bitmap bitmap, String nombre){
+        Uri imageUri = null;
+        File foto = new File(getApplication().getExternalFilesDir(null),nombre);
+        try {
+            FileOutputStream fos = new FileOutputStream(foto);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+            imageUri = Uri.fromFile(foto);
+
+            return imageUri;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public void insertarAntes() {
 

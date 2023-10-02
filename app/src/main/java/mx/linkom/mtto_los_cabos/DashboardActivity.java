@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
+import org.opencv.android.OpenCVLoader;
 
 import mx.linkom.mtto_los_cabos.Controller.PagerControlador;
 
@@ -43,6 +44,10 @@ public class DashboardActivity extends  mx.linkom.mtto_los_cabos.Menu {
         setContentView(R.layout.activity_dashboard);
         fAuth = FirebaseAuth.getInstance();
         Conf = new mx.linkom.mtto_los_cabos.Configuracion(this);
+
+        if (OpenCVLoader.initDebug()) Log.e("openCV", "Ya funciona :D");
+        else Log.e("openCV", "NO funciona :D");
+
          Titulo = (TextView) findViewById(R.id.titulo);
          Titulo.setText("Trabajador: "+Conf.getNomResi());
         TabLayout tablayout = (TabLayout) findViewById(R.id.tablayout);
