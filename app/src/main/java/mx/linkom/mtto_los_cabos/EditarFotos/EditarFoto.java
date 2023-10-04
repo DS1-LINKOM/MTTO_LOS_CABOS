@@ -247,7 +247,7 @@ public class EditarFoto {
 
         // Draw the text on the image
 
-        Imgproc.putText(selected_image, "LINK VALET", org, fontFace, fontScale, color, thickness, lineType, false);
+        Imgproc.putText(selected_image, "LINK MTTO", org, fontFace, fontScale, color, thickness, lineType, false);
 
         Imgproc.putText(selected_image, fecha, org2, fontFace, fontScale, color, thickness, lineType, false);
 
